@@ -1,12 +1,38 @@
 <script setup lang="ts">
+
+  import { ref, onMounted, onUnmounted } from 'vue'
   import CircularProgressBar from "./components/CircularProgressBar.vue"
-  // to do : add randomizer for 3 values
+
+  const {
+    values
+  } = useInfiniteRandomValues()
+
+  function useInfiniteRandomValues() {
+
+    let interval
+    const values = ref([0, 0, 0])
+
+    onMounted(() => {
+
+      const random100 = () => Math.round(Math.random() * 100)
+      const setValues = () => values.value = values.value.map(() => random100())
+
+      setValues()
+      interval = setInterval(() => setValues(), 3000)
+    })
+
+    onUnmounted(() => clearInterval(interval))
+
+    return {
+      values
+    }
+  }
 </script>
 
 <template>
-  <CircularProgressBar :progress="20" />
-  <CircularProgressBar :progress="50" />
-  <CircularProgressBar :progress="80" />
+  <CircularProgressBar :progress="values[0]" />
+  <CircularProgressBar :progress="values[1]" />
+  <CircularProgressBar :progress="values[2]" />
 </template>
 
 <style>
