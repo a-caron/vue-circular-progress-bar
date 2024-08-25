@@ -18,7 +18,7 @@
       const setValues = () => values.value = values.value.map(() => random100())
 
       setValues()
-      interval = setInterval(() => setValues(), 3000)
+      interval = setInterval(() => setValues(), 3500)
     })
 
     onUnmounted(() => clearInterval(interval))

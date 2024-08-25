@@ -6,8 +6,18 @@
     progress: number
   }>()
 
-  // to do : color depending on the value
-  const color = 'red'
+  const color = computed(() => {
+
+    const colors = {
+      33: '#fa5a3e',
+      66: '#28a148',
+      100: '#1691d1'
+    }
+
+    for (const key in colors) {
+      if (props.progress <= key) return colors[key]
+    }
+  })
 
   const {
     circleDiam,
@@ -67,6 +77,10 @@
     background-color: rgba(white, .9);
     padding: 20px;
     border-radius: 14px;
+
+    &__label, svg circle {
+      transition: 1.2s;
+    }
 
     &__label, svg {
       position: absolute;
