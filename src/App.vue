@@ -9,7 +9,7 @@
 
   function useInfiniteRandomValues() {
 
-    let interval
+    let intervalId:number
     const values = ref([0, 0, 0])
 
     onMounted(() => {
@@ -18,10 +18,10 @@
       const setValues = () => values.value = values.value.map(() => random100())
 
       setValues()
-      interval = setInterval(() => setValues(), 3500)
+      intervalId = setInterval(() => setValues(), 3500)
     })
 
-    onUnmounted(() => clearInterval(interval))
+    onUnmounted(() => clearInterval(intervalId))
 
     return {
       values

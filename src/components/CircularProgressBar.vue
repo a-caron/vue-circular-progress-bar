@@ -6,17 +6,20 @@
     progress: number
   }>()
 
-  const color = computed(() => {
+  const colors:Record<number, string> = {
+    33: '#fa5a3e',
+    66: '#28a148',
+    100: '#1691d1'
+  }
 
-    const colors = {
-      33: '#fa5a3e',
-      66: '#28a148',
-      100: '#1691d1'
-    }
-
+  const color = computed<string>(() => {
     for (const key in colors) {
-      if (props.progress <= key) return colors[key]
+      const breakpointValue = Number(key)
+      if (props.progress <= breakpointValue) {
+        return colors[key].toString()
+      }
     }
+    return colors[100]
   })
 
   const {
