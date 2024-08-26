@@ -23,30 +23,34 @@
   })
 
   const {
-    circleDiam,
-    circleRadiusMinusBorder,
+    circleDiamPlusBorder,
+    circleRadius,
+    circleProgressBorder,
+    circleTotalBorder,
     circleOffset,
-    strokeDashArray,
-    strokeDashOffset
+    circleCirc,
+    circleCircProgress
   } = useCircle()
 
   function useCircle() {
 
-    const size = 80
-    const border = 6
-    const sizeMinusBorder = size - border
-    const strokeDashArray = 2 * Math.PI * (sizeMinusBorder / 2)
+    const diam = 74
+    const border = 12
+    const radius = diam / 2
+    const circ = 2 * Math.PI * radius
 
-    const strokeDashOffset = computed(() => {
-      return strokeDashArray - (strokeDashArray * props.progress / 100)
+    const circProgress = computed(() => {
+      return circ - (circ * props.progress / 100)
     })
 
     return {
-      circleDiam: `${size}px`,
-      circleRadiusMinusBorder: sizeMinusBorder / 2,
+      circleDiamPlusBorder: `${diam + border}px`,
+      circleRadius: radius,
+      circleProgressBorder: border / 2,
+      circleTotalBorder: (border / 2) - 2,
       circleOffset: `${border / 2}px`,
-      strokeDashArray,
-      strokeDashOffset
+      circleCirc: circ,
+      circleCircProgress: circProgress
     }
   }
 </script>
@@ -63,9 +67,9 @@
         v-for="type in ['total', 'progress']"
         :key="type"
         :data-type="type"
-        :cx="circleRadiusMinusBorder"
-        :cy="circleRadiusMinusBorder"
-        :r="circleRadiusMinusBorder"/>
+        :cx="circleRadius"
+        :cy="circleRadius"
+        :r="circleRadius"/>
     </svg>
   </div>
 </template>
@@ -75,8 +79,8 @@
   .circular-progress-bar {
     aspect-ratio: 1/1;
     position: relative;
-    width: v-bind(circleDiam);
-    height: v-bind(circleDiam);
+    width: v-bind(circleDiamPlusBorder);
+    height: v-bind(circleDiamPlusBorder);
     background-color: rgba(white, .9);
     padding: 20px;
     border-radius: 14px;
@@ -100,8 +104,8 @@
     }
 
     svg {
-      width: v-bind(circleDiam);
-      height: v-bind(circleDiam);
+      width: v-bind(circleDiamPlusBorder);
+      height: v-bind(circleDiamPlusBorder);
       transform: translate(-50%, -50%) rotate(-90deg);
 
       circle {
@@ -110,15 +114,15 @@
       }
 
       [data-type='total'] {
-        stroke-width: 1;
+        stroke-width: v-bind(circleTotalBorder);
         stroke: v-bind(color);
         opacity: 0.2;
       }
 
       [data-type='progress'] {
-        stroke-width: 3;
-        stroke-dasharray: v-bind(strokeDashArray);
-        stroke-dashoffset: v-bind(strokeDashOffset);
+        stroke-width: v-bind(circleProgressBorder);
+        stroke-dasharray: v-bind(circleCirc);
+        stroke-dashoffset: v-bind(circleCircProgress);
         stroke: v-bind(color);
       }
     }

@@ -17,7 +17,7 @@
       const random100 = () => Math.round(Math.random() * 100)
       const setValues = () => values.value = values.value.map(() => random100())
 
-      setValues()
+      setTimeout(setValues)
       intervalId = setInterval(() => setValues(), 3500)
     })
 
