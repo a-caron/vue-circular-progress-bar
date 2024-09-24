@@ -1,5 +1,3 @@
 # Circular progress bar
 
-Demo : []()
-
-Blog article : [Medium]()
+[Demo](https://vue-circular-progress-bar.netlify.app/)
